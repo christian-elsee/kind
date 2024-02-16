@@ -2,7 +2,7 @@ export NAME := $(shell basename "$$PWD" )
 export ORG := christianelsee
 export SHA := $(shell git rev-parse --short HEAD)
 export TS  := $(shell date +%s)
-export PATH := dist/bin:$(PATH)
+export PATH := ./bin:$(PATH)
 
 .DEFAULT_GOAL := @goal
 .ONESHELL:
@@ -31,3 +31,7 @@ build:
 check:
 	cd dist
 	kubectl get nodes
+
+install:
+	mkdir -p ~/.kube
+	cp dist/kubeconfig ~/.kube/config
