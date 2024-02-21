@@ -1,5 +1,6 @@
 *
 
 !.gitignore
-!config.yaml
 !Makefile
+!config
+!config/master.yaml

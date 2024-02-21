@@ -22,7 +22,7 @@ dist: ;: ## dist
 	rsync -av config.yaml bin $@
 	cp assets/kind-darwin-amd64 $@/bin/kind
 
-build:
+install:
 	cd dist
 	kind create cluster --config config.yaml
 	kind get kubeconfig --name kind \
