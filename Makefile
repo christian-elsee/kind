@@ -26,4 +26,4 @@ dist:
 	cp assets/kind-linux-arm64 $@/bin/kind
 
 publish:
-	rsync -av dist ubuntu@master:/tmp
+	rsync -av dist ubuntu@master:/tmp/kind
