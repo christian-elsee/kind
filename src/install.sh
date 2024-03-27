@@ -7,6 +7,7 @@ export PATH="./bin:$PATH"
 ## main
 logger -sp DEBUG -- "Enter"
 
+kind delete cluster --name kind
 kind create cluster --config config.yaml
 kind get kubeconfig --name kind \
     | tee kubeconfig \

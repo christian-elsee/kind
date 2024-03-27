@@ -23,7 +23,8 @@ dist:
 	mkdir -p $@ $@/bin
 	cp src/install.sh $@
 	cp $(target) $@/config.yaml
-	cp assets/kind-linux-arm64 $@/bin/kind
+	cp assets/kind-$(shell uname)-$(shell uname -m) $@/bin/kind
 
+publish: target ?= christian@lnk-lab1-134
 publish:
-	rsync -av dist ubuntu@master:/tmp/kind
+	rsync -av --delete dist/ $(target):/tmp/kind
