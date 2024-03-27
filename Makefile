@@ -26,6 +26,7 @@ dist:
 	cp src/install.sh $@
 	cp $(target) $@/config.yaml
 	cp assets/kind-$(os)-$(arch) $@/bin/kind
+	chmod +x $@/bin/kind
 
 publish: target ?= christian@lnk-lab1-134
 publish:
