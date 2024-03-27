@@ -27,13 +27,22 @@ dist:
 	cp -rf manifest src/install.sh $@
 	cp assets/kind-$(os)-$(arch) $@/bin/kind
 
+
 build: export IP := $(shell echo $(target) | sed -E 's/^.+@//' | xargs dig +short)
 build:
 	: ## $@
-
 	chmod +x dist/bin/kind
 	<dist/$(topology) envsubst | tee dist/config.yaml
 
-publish:
+	rm -rf dist/checksum && \
+	find dist \
+		-type f \
+    -exec md5sum {} + \
+	| sort -k 2 \
+	| md5sum \
+	| cut -f1 -d" " \
+	| tee dist/checksum
+
+publish: dist/checksum
 	: ## $@
 	rsync -av --delete dist/ $(target):/tmp/kind

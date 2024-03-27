@@ -5,7 +5,7 @@ set -euo pipefail
 export PATH="./bin:$PATH"
 
 ## main
-logger -sp DEBUG -- "Enter"
+logger -sp DEBUG -- "Enter" "checksum=$(cat checksum)"
 
 kind delete cluster --name kind
 kind create cluster --config config.yaml
