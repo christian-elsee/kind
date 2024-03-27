@@ -1,13 +1,12 @@
-## env
-export PATH := ./bin:$(PATH)
+include config.env
 
-target ?= lnk-lab1-134
-topology ?= manifest/single.yaml
-
-## settings
 .DEFAULT_GOAL := @goal
+.SHELLFLAGS := -euo pipefail $(if $(TRACE),-x,) -c
 .ONESHELL:
 .POSIX:
+
+## env
+export PATH := ./bin:$(PATH)
 
 ## workflow
 @goal: distclean dist build
@@ -28,11 +27,13 @@ dist:
 	cp -rf manifest src/install.sh $@
 	cp assets/kind-$(os)-$(arch) $@/bin/kind
 
-build: export IP := $(shell echo $(target) | xargs dig +short)
+build: export IP := $(shell echo $(target) | sed -E 's/^.+@//' | xargs dig +short)
 build:
+	: ## $@
+
 	chmod +x dist/bin/kind
 	<dist/$(topology) envsubst | tee dist/config.yaml
 
-
 publish:
-	rsync -av --delete dist/ $(HOST):/tmp/kind
+	: ## $@
+	rsync -av --delete dist/ $(target):/tmp/kind
