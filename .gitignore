@@ -2,6 +2,8 @@
 
 !.gitignore
 !Makefile
+!README.md
+!config.env.dist
 !manifest
 !manifest/*.yaml
 !src
